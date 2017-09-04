@@ -1,0 +1,21 @@
+{
+  "name": "change-version",
+  "version": "0.0.13",
+  "description": "根据年月的日期自动更改版本号",
+  "main": "index.js",
+  "bin": {
+    "change-version": "./index.js"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haiyanglong/change-version.git"
+  },
+  "keywords": [
+    "自动更改package中的版本号"
+  ],
+  "author": "995855294@qq.com",
+  "license": "ISC"
+}
