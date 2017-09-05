@@ -1,21 +1,29 @@
 {
   "name": "change-version",
-  "version": "0.0.13",
-  "description": "根据年月的日期自动更改版本号",
+  "version": "0.0.16",
+  "description": "更改版本号",
   "main": "index.js",
   "bin": {
     "change-version": "./index.js"
   },
   "scripts": {
-    "test": "test"
+    "test": "",
+    "docker-build:test": "docker-build chinapopin.com:18443/popin/wx-manager-ui:1.2.2-TEST-RELEASE ./docker-test --host=http://100.98.100.242:2375",
+    "docker-build": "docker-build chinapopin.com:18443/popin/wx-manager-ui:1.9.5 ./docker-test --host=http://100.98.100.242:2375"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/haiyanglong/change-version.git"
   },
   "keywords": [
-    "自动更改package中的版本号"
+    "自动更改package中的版本号",
+    "版本号",
+    "version",
+    "chenge"
   ],
   "author": "995855294@qq.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.11.0"
+  }
 }
