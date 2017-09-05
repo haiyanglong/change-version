@@ -12,7 +12,7 @@ program
     .version(localFile.version)
     .allowUnknownOption()
     .description('set version and change your package.json file')
-    .option('-sv, --sv <sv>', 'your version', y+'.'+m+'.'+d)
+    .option('-sv, --sv [sv]', 'your version', y+'.'+m+'.'+d)
     .option('-db, --db [db]', 'is set docker-build version', 'false')
     .option('-evn, --evn [evn]', 'your evn', 'prod')
 program.parse(process.argv)
@@ -67,21 +67,8 @@ if(program.db){
         }
     }
 }
-// console.log(file);
-// console.log('db:'+argv.db);
-// console.log('evn:'+argv.evn);
-// if(argv.db){
-//     if(!file.scripts.docker-build){
-//         console.log('2222');
-//         console.log('找不到docker-build参数');
-//         process.exit(1);
-//         return false
-//     }else{
-//         console.log('11111111');
-//         console.log(file.scripts.docker-build)
-//     }
-// }
 var destString = JSON.stringify(file,null, 2);
-fs.writeFile(process.cwd()+'/package.json', destString);
-// console.log('success!!!');
-// process.exit(0);
+fs.writeFile(process.cwd()+'/package.json', destString,function(rs){
+    console.log('change-version success!!!');
+    process.exit(0);
+});

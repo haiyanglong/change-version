@@ -1,15 +1,13 @@
 {
   "name": "change-version",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "更改版本号",
   "main": "index.js",
   "bin": {
     "change-version": "./index.js"
   },
   "scripts": {
-    "test": "",
-    "docker-build:test": "docker-build chinapopin.com:18443/popin/wx-manager-ui:1.2.2-TEST-RELEASE ./docker-test --host=http://100.98.100.242:2375",
-    "docker-build": "docker-build chinapopin.com:18443/popin/wx-manager-ui:1.9.5 ./docker-test --host=http://100.98.100.242:2375"
+    "test": ""
   },
   "repository": {
     "type": "git",
