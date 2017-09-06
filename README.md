@@ -1,6 +1,6 @@
 # change-version（更改版本号）
 安装使用:
-<pre><code>change-version</code></pre>
+<pre><code>npm install -g change-version</code></pre>
 参数：
 <pre><code>
   Usage: change-version [options]
