@@ -21,51 +21,75 @@ program.parse(process.argv)
 // console.log(program.evn);
 file.version=program.sv;
 if(program.db){
-    // console.log(file.scripts);
-    if(!file.scripts['docker-build:test'] &&  !file.scripts['docker-build:prod'] && !file.scripts['docker-build:prod']){
+    if(!file.config['docker-build-name']){
         console.log('找不到docker-build参数');
         process.exit(1);
     }else{
+        file.config['version']=file.version;
         if(program.evn=='test'){
-            let dockerCl
-            if (file.scripts['docker-build:test']){
-                dockerCl=file.scripts['docker-build:test'];
-                var x=dockerCl.indexOf(':');
-                var star=dockerCl.indexOf(':',x+1);
-                var end=dockerCl.indexOf(' ',star+1);
-                var str=dockerCl.substring(star+1,end);
-                dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
-                file.scripts['docker-build:test']=dockerCl;
-            }else{
-                dockerCl=file.scripts['docker-build'];
-                var x=dockerCl.indexOf(':');
-                var star=dockerCl.indexOf(':',x+1);
-                var end=dockerCl.indexOf(' ',star+1);
-                var str=dockerCl.substring(star+1,end);
-                dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
-                file.scripts['docker-build']=dockerCl;
-            };
+            var dockerCl=file.config['docker-build-name'];
+            var x=dockerCl.indexOf(':');
+            var star=dockerCl.indexOf(':',x+1);
+            var end=dockerCl.indexOf(' ',star+1);
+            var str=dockerCl.substring(star+1,end);
+            dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
+            file.config['docker-build-name']=dockerCl;
         }else{
-            let dockerCl
-            if (file.scripts['docker-build:prod']){
-                dockerCl=file.scripts['docker-build:prod'];
-                var x=dockerCl.indexOf(':');
-                var star=dockerCl.indexOf(':',x+1);
-                var end=dockerCl.indexOf(' ',star+1);
-                var str=dockerCl.substring(star+1,end);
-                dockerCl=dockerCl.replace(str,file.version);
-                file.scripts['docker-build:prod']=dockerCl;
-            }else{
-                dockerCl=file.scripts['docker-build'];
-                var x=dockerCl.indexOf(':');
-                var star=dockerCl.indexOf(':',x+1);
-                var end=dockerCl.indexOf(' ',star+1);
-                var str=dockerCl.substring(star+1,end);
-                dockerCl=dockerCl.replace(str,file.version);
-                file.scripts['docker-build']=dockerCl;
-            };
+            var dockerCl=file.config['docker-build-name'];
+            var x=dockerCl.indexOf(':');
+            var star=dockerCl.indexOf(':',x+1);
+            var end=dockerCl.indexOf(' ',star+1);
+            var str=dockerCl.substring(star+1,end);
+            dockerCl=dockerCl.replace(str,file.version);
+            file.config['docker-build-name']=dockerCl;
         }
     }
+    
+    // console.log(file.scripts);
+    // if(!file.scripts['docker-build:test'] &&  !file.scripts['docker-build:prod'] && !file.scripts['docker-build:prod']){
+    //     console.log('找不到docker-build参数');
+    //     process.exit(1);
+    // }else{
+    //     if(program.evn=='test'){
+    //         let dockerCl
+    //         if (file.scripts['docker-build:test']){
+    //             dockerCl=file.scripts['docker-build:test'];
+    //             var x=dockerCl.indexOf(':');
+    //             var star=dockerCl.indexOf(':',x+1);
+    //             var end=dockerCl.indexOf(' ',star+1);
+    //             var str=dockerCl.substring(star+1,end);
+    //             dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
+    //             file.scripts['docker-build:test']=dockerCl;
+    //         }else{
+    //             dockerCl=file.scripts['docker-build'];
+    //             var x=dockerCl.indexOf(':');
+    //             var star=dockerCl.indexOf(':',x+1);
+    //             var end=dockerCl.indexOf(' ',star+1);
+    //             var str=dockerCl.substring(star+1,end);
+    //             dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
+    //             file.scripts['docker-build']=dockerCl;
+    //         };
+    //     }else{
+    //         let dockerCl
+    //         if (file.scripts['docker-build:prod']){
+    //             dockerCl=file.scripts['docker-build:prod'];
+    //             var x=dockerCl.indexOf(':');
+    //             var star=dockerCl.indexOf(':',x+1);
+    //             var end=dockerCl.indexOf(' ',star+1);
+    //             var str=dockerCl.substring(star+1,end);
+    //             dockerCl=dockerCl.replace(str,file.version);
+    //             file.scripts['docker-build:prod']=dockerCl;
+    //         }else{
+    //             dockerCl=file.scripts['docker-build'];
+    //             var x=dockerCl.indexOf(':');
+    //             var star=dockerCl.indexOf(':',x+1);
+    //             var end=dockerCl.indexOf(' ',star+1);
+    //             var str=dockerCl.substring(star+1,end);
+    //             dockerCl=dockerCl.replace(str,file.version);
+    //             file.scripts['docker-build']=dockerCl;
+    //         };
+    //     }
+    // }
 }
 var destString = JSON.stringify(file,null, 2);
 fs.writeFile(process.cwd()+'/package.json', destString,function(rs){

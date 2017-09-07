@@ -1,6 +1,6 @@
 {
   "name": "change-version",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "更改版本号",
   "main": "index.js",
   "bin": {
