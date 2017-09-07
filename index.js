@@ -21,27 +21,25 @@ program.parse(process.argv)
 // console.log(program.evn);
 file.version=program.sv;
 if(program.db){
-    if(!file.config['docker-build-name']){
-        console.log('找不到docker-build参数');
+    if(!file.config['dockerBuildName']){
+        console.log('找不到dockerBuildName参数');
         process.exit(1);
     }else{
         file.config['version']=file.version;
         if(program.evn=='test'){
-            var dockerCl=file.config['docker-build-name'];
+            var dockerCl=file.config['dockerBuildName'];
             var x=dockerCl.indexOf(':');
             var star=dockerCl.indexOf(':',x+1);
-            var end=dockerCl.indexOf(' ',star+1);
-            var str=dockerCl.substring(star+1,end);
+            var str=dockerCl.substring(star+1,dockerCl.length);
             dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
-            file.config['docker-build-name']=dockerCl;
+            file.config['dockerBuildName']=dockerCl;
         }else{
-            var dockerCl=file.config['docker-build-name'];
+            var dockerCl=file.config['dockerBuildName'];
             var x=dockerCl.indexOf(':');
             var star=dockerCl.indexOf(':',x+1);
-            var end=dockerCl.indexOf(' ',star+1);
-            var str=dockerCl.substring(star+1,end);
+            var str=dockerCl.substring(star+1,dockerCl.length);
             dockerCl=dockerCl.replace(str,file.version);
-            file.config['docker-build-name']=dockerCl;
+            file.config['dockerBuildName']=dockerCl;
         }
     }
     
