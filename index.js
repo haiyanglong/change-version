@@ -15,10 +15,8 @@ program
     .option('-sv, --sv [sv]', 'your version', y+'.'+m+'.'+d)
     .option('-db, --db [db]', 'is set docker-build version', 'false')
     .option('-evn, --evn [evn]', 'your evn', 'prod')
+    .option('-name, --name [name]', 'your project name', '')
 program.parse(process.argv)
-// console.log(program.sv);
-// console.log(program.db);
-// console.log(program.evn);
 file.version=program.sv;
 if(program.db){
     if(!file.config['dockerBuildName']){
@@ -26,21 +24,30 @@ if(program.db){
         process.exit(1);
     }else{
         file.config['version']=file.version;
-        if(program.evn=='test'){
-            var dockerCl=file.config['dockerBuildName'];
-            var x=dockerCl.indexOf(':');
-            var star=dockerCl.indexOf(':',x+1);
+        var dockerCl=file.config['dockerBuildName'];
+        if(program.name){
+            var star=dockerCl.lastIndexOf('/');
             var str=dockerCl.substring(star+1,dockerCl.length);
-            dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
-            file.config['dockerBuildName']=dockerCl;
+            if(program.evn=='test'){
+                dockerCl=dockerCl.replace(str,program.name+':'+file.version+'-TEST-RELEASE');
+                file.config['dockerBuildName']=dockerCl;
+            }else{
+                dockerCl=dockerCl.replace(str,program.name+':'+file.version);
+                file.config['dockerBuildName']=dockerCl;
+            }
         }else{
-            var dockerCl=file.config['dockerBuildName'];
             var x=dockerCl.indexOf(':');
             var star=dockerCl.indexOf(':',x+1);
             var str=dockerCl.substring(star+1,dockerCl.length);
-            dockerCl=dockerCl.replace(str,file.version);
-            file.config['dockerBuildName']=dockerCl;
+            if(program.evn=='test'){
+                dockerCl=dockerCl.replace(str,file.version+'-TEST-RELEASE');
+                file.config['dockerBuildName']=dockerCl;
+            }else{
+                dockerCl=dockerCl.replace(str,file.version);
+                file.config['dockerBuildName']=dockerCl;
+            }
         }
+        
     }
     
     // console.log(file.scripts);
